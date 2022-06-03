@@ -13,6 +13,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NavBarComponent,
     ArtefactoComponent,
     HomeComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

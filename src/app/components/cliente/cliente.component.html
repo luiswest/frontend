@@ -86,13 +86,23 @@
           <div class="row mb-1">
             <label for="idCliente" class="col-sm-3 col-form-label">Id Cliente</label>
             <div class="col-sm-9">
-              <input type="text" formControlName="idCliente" class="form-control" id="idCliente" placeholder="Id Cliente">
+              <input type="text" formControlName="idCliente" class="form-control" placeholder="Id Cliente">
+              <div class="alert alert-danger" *ngIf="E['idCliente'].invalid && E['idCliente'].touched">
+                <div *ngIf="E['idCliente'].errors!['required']">El id Cliente es obligatorio</div>
+                <div *ngIf="E['idCliente'].errors!['maxlength']">El tamaño máximo del id es de 15</div>
+              </div>
             </div>
           </div>
           <div class="row mb-1">
             <label for="nombre" class="col-sm-3 col-form-label">Nombre</label>
             <div class="col-sm-9">
               <input type="text" formControlName="nombre" class="form-control" id="nombre" placeholder="Nombre">
+              <div class="alert alert-danger" *ngIf="E['nombre'].invalid && E['nombre'].touched">
+                <div *ngIf="E['nombre'].errors!['required']">El nombre es obligatorio</div>
+                <div *ngIf="E['nombre'].errors!['maxlength']">El tamaño máximo del nombre es de 30</div>
+                <div *ngIf="E['nombre'].errors!['minlength']">El nombre debe ser de almenos 2 caracteres</div>
+                <div *ngIf="E['nombre'].errors!['pattern']">Nombre no válido</div>
+              </div>
             </div>
           </div>
           <div class="row mb-1">
@@ -135,7 +145,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-outline-primary" form="frmCliente">
+        <button type="submit" class="btn btn-outline-primary" form="frmCliente"
+           [disabled]="frmCliente.invalid">
           <fa-icon [icon]="['fas','save']"></fa-icon> Guardar</button>
         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
           <fa-icon [icon]="['fas','xmark']"></fa-icon>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from 'src/app/shared/models/cliente.model';
 import { ClienteService } from 'src/app/shared/services/cliente.service';
 import  Swal  from 'sweetalert2';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -21,20 +21,29 @@ export class ClienteComponent implements OnInit {
   ) {
       this.frmCliente = this.fb.group({
         id : [''],
-        idCliente : [''],
-        nombre: [''],
-        apellido1: [''],
-        apellido2: [''],
-        telefono: [''],
-        celular: [''],
-        correo: [''],
-        direccion: ['']
+        idCliente : ['', [Validators.required, Validators.maxLength(15)]],
+        nombre: ['',[Validators.required,Validators.minLength(2),
+                     Validators.maxLength(30),
+                     Validators.pattern('([A-Za-zÑñáéíóú]*)( ([A-Za-zÑñáéíóú]*)){0,1}')]],
+        apellido1: ['',[Validators.required,Validators.minLength(2),
+                        Validators.maxLength(15),
+                        Validators.pattern('([A-Za-zÑñáéíóú]*)')]],
+        apellido2: ['',[Validators.required,Validators.minLength(2),
+                          Validators.maxLength(15),
+                          Validators.pattern('([A-Za-zÑñáéíóú]*)')]],
+        telefono: ['', [Validators.pattern('[0-9]{4}-[0-9]{4}')]],
+        celular: ['', [Validators.required, Validators.pattern('[0-9]{4}-[0-9]{4}')]],
+        correo: ['',[Validators.required, Validators.email]],
+        direccion: ['',[Validators.required, Validators.minLength(5)]]
       });
    }
 
   //Eventos botones CRUD
   get v(){
     return this.frmCliente.value
+  }
+  get E() {
+    return this.frmCliente.controls;
   }
   onNuevo() {
     this.titulo = 'Nuevo Cliente'
@@ -103,6 +112,7 @@ export class ClienteComponent implements OnInit {
       }
     })
   }
+
   onGuardar() {
     //console.log(this.frmCliente.value);
     let llamada : Observable<any>;

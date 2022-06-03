@@ -35,11 +35,11 @@ export class ClienteService {
   guardar(datos : Cliente, id? :number) : Observable<any> {
     if (id){
       //modificar
-      return this.http.put<Cliente>(`${this.SRV}/cliente/${id}`, JSON.stringify(datos), this.httpOptions)
+      return this.http.put<Cliente>(`${this.SRV}/cliente/${id}`, datos, this.httpOptions)
         .pipe(retry(1), catchError(this.handleError));
     } else {
       //crear nuevo
-      return this.http.post<Cliente>(`${this.SRV}/cliente`, datos)
+      return this.http.post<Cliente>(`${this.SRV}/cliente`, datos, this.httpOptions)
         .pipe(retry(1), catchError(this.handleError));
     }
   }
