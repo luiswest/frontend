@@ -134,6 +134,7 @@ export class ClienteComponent implements OnInit {
       .subscribe({
         complete : () => {
           this.filtrar();
+          this.frmCliente.reset();
           Swal.fire({
             icon: 'success',
             title: texto,
