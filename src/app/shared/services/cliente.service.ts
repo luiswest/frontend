@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Cliente } from 'src/app/shared/models/cliente.model';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
-  SRV : string = 'http://tallerbd';
+  SRV : string = environment.SRV;
 
   constructor(
     private http :HttpClient

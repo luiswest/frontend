@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  SRV : 'http://www.misitio.com'
 };

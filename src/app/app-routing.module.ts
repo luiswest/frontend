@@ -4,14 +4,18 @@ import { HomeComponent } from './components/home/home.component';
 import { ClienteComponent } from './components/cliente/cliente.component'
 import { ArtefactoComponent } from './components/artefacto/artefacto.component'
 import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { LoginGuard } from './shared/guards/login.guard';
 
 
 const routes: Routes = [
-  
+  { path: '', pathMatch : 'full', redirectTo:'login' },
   { path: 'home', component: HomeComponent },
-  { path: 'cliente', component: ClienteComponent },
+  { path: 'cliente', component: ClienteComponent,
+    canActivate: [AuthGuard] },
   { path: 'artefacto', component: ArtefactoComponent },
-  { path: '', component: LoginComponent}
+  { path: 'login', component: LoginComponent,
+    canActivate: [LoginGuard] }
 ];
 
 @NgModule({

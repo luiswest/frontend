@@ -6,13 +6,17 @@
         <div class="card-body">
             <form id="frmLogin" [formGroup]="frmLogin" (ngSubmit)="onSubmit();">
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" formControlName="idUsuario" id="idUsuario" placeholder="Id Usuario">
+                    <input type="text" class="form-control" formControlName="idUsuario" id="idUsuario" placeholder="Id Usuario"
+                     (focus)="errorLogin=false;">
                     <label for="idUsuario">Id Usuario</label>
                   </div>
                   <div class="form-floating">
-                    <input type="password" class="form-control" formControlName="passw" id="passw" placeholder="Contraseña">
+                    <input type="password" class="form-control" formControlName="passw" id="passw" placeholder="Contraseña"
+                    (focus)="errorLogin=false;">
                     <label for="passw">Contraseña</label>
-                  </div>            
+                  </div>
+                  <div class="alert alert-danger" *ngIf="errorLogin">
+                      Usuario o contraseña no válido</div>            
             </form>
         </div>
         <div class="card-footer">
