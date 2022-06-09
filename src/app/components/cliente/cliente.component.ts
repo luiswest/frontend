@@ -4,6 +4,7 @@ import { ClienteService } from 'src/app/shared/services/cliente.service';
 import  Swal  from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-cliente',
@@ -17,7 +18,8 @@ export class ClienteComponent implements OnInit {
   frmCliente : FormGroup;
   constructor(
     private srvCliente : ClienteService,
-    private fb : FormBuilder
+    private fb : FormBuilder,
+    private srvAuth : AuthService
   ) {
       this.frmCliente = this.fb.group({
         id : [''],
@@ -197,6 +199,7 @@ export class ClienteComponent implements OnInit {
   ngOnInit(): void {
      this.filtro = {idCliente : '', nombre : '', apellido1 : '', apellido2 : ''};
      this.filtrar();
+     console.log(this.srvAuth.valorUsrActual)
   }
 
 }

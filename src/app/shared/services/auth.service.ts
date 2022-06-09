@@ -12,7 +12,7 @@ import { User } from '../models/user';
 })
 export class AuthService {
   private usrActualSubject = new BehaviorSubject<User>(new User());
-  public usrActual = this.usrActualSubject.asObservable();
+  private usrActual = this.usrActualSubject.asObservable();
   constructor(
     private http : HttpClient,
     private srvToken : TokenService
@@ -50,7 +50,7 @@ export class AuthService {
   public isLogged() : boolean {
      return !!this.srvToken.token;
   }
-  public getUserActual() : User {
+  private getUserActual() : User {
     if (!this.srvToken.token) {
       return new User(); //{usr:'', rol:-1}
     } 
