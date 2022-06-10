@@ -12,7 +12,7 @@ import { User } from '../models/user';
 })
 export class AuthService {
   private usrActualSubject = new BehaviorSubject<User>(new User());
-  private usrActual = this.usrActualSubject.asObservable();
+  //private usrActual = this.usrActualSubject.asObservable();
   constructor(
     private http : HttpClient,
     private srvToken : TokenService
