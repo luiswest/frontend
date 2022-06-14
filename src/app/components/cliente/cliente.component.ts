@@ -5,6 +5,7 @@ import  Swal  from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { TokenService } from 'src/app/shared/services/token.service';
 
 @Component({
   selector: 'app-cliente',
@@ -19,7 +20,8 @@ export class ClienteComponent implements OnInit {
   constructor(
     private srvCliente : ClienteService,
     private fb : FormBuilder,
-    private srvAuth : AuthService
+    private srvAuth : AuthService,
+    private srvToken : TokenService // Esto se borra
   ) {
       this.frmCliente = this.fb.group({
         id : [''],
@@ -194,12 +196,11 @@ export class ClienteComponent implements OnInit {
         }
       )
   }
-
-
   ngOnInit(): void {
      this.filtro = {idCliente : '', nombre : '', apellido1 : '', apellido2 : ''};
      this.filtrar();
      console.log(this.srvAuth.valorUsrActual)
+     console.log(this.srvToken.tiempoExpToken())
   }
 
 }

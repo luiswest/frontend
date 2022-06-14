@@ -11,9 +11,11 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 // import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { JwtInterceptor } from './shared/helpers/jwt.interceptor';
+import { RefreshTokenInterceptor } from './shared/helpers/refresh-token.interceptor';
 
 
 @NgModule({
@@ -34,7 +36,10 @@ import { LoginComponent } from './components/login/login.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi : true },
+    { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi : true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

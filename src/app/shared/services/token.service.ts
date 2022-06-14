@@ -1,6 +1,8 @@
 import { Token } from '../models/token';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,10 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 export class TokenService {
   private JWT_TOKEN = 'JWT_TOKEN';
   private REFRESH_TOKEN = 'REFRESH_TOKEN';
-  constructor() { }
+  private refrescando : boolean = false;
+  constructor(
+    private http : HttpClient
+  ) { }
   setTokens(tokens: Token) : void {
     this.setToken(tokens.token);
     this.setRefreshToken(tokens.refreshToken)
@@ -32,5 +37,25 @@ export class TokenService {
   public decodeToken() : any {
     const helper = new JwtHelperService();
     return helper.decodeToken(this.token); 
+  }
+  public jwtTokenExp() : boolean {
+    const helper = new JwtHelperService();
+    return helper.isTokenExpired(this.token);
+  }
+  public tiempoExpToken() : any {
+    return this.decodeToken().exp - (Date.now() / 1000);
+  }
+  public refreshTokens() {
+     if (!this.refrescando) {
+      this.refrescando = true;
+      this.http.patch<Token>(`${environment.SRV}/auth/refrescar`,
+      {idUsuario : this.decodeToken().sub, tkR : this.refreshToken})
+        .subscribe(
+          tokens => {
+            this.setTokens(tokens);
+            this.refrescando = false;
+          }
+      )
+     }
   }
 }

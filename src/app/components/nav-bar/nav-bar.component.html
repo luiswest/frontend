@@ -27,6 +27,17 @@
             <a class="nav-link disabled">Disabled</a>
           </li>
         </ul>
+        <div class="btn-group dropstart" *ngIf="usuario">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <fa-icon [icon]="['fas','user']"></fa-icon> {{usuario}}
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#"(click)="onSalir();">Salir</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Cambiar Contraseña</a></li>
+          </ul>
+        </div>
       </div>
+      
     </div>
   </nav>

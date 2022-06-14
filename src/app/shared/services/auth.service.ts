@@ -6,16 +6,18 @@ import { map, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { TokenService } from './token.service';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private usrActualSubject = new BehaviorSubject<User>(new User());
-  //private usrActual = this.usrActualSubject.asObservable();
+  public usrActual = this.usrActualSubject.asObservable();
   constructor(
     private http : HttpClient,
-    private srvToken : TokenService
+    private srvToken : TokenService,
+    private router : Router
   ) { }
   public get valorUsrActual() : User {
     return this.usrActualSubject.value
@@ -27,6 +29,7 @@ export class AuthService {
         tap(
           tokens => {
             this.doLogin(tokens);
+            this.router.navigate(['/home']);
             console.log(tokens);
           }
         ),
@@ -36,19 +39,26 @@ export class AuthService {
         )
       )
   }
+  public logout() {
+    this.http.patch(`${environment.SRV}/auth/cerrar`,	{
+      "idUsuario": this.valorUsrActual.usr
+    })
+      .subscribe();
+    this.doLogout()
+  }
   private doLogin(tokens : Token) : void {
     this.srvToken.setTokens(tokens);
     this.usrActualSubject.next(this.getUserActual())
 
   }
-  public doLogout(){
+  private doLogout(){
     if(this.srvToken.token){
       this.srvToken.eliminarTokens();
     }
     this.usrActualSubject.next(this.getUserActual())
   }
   public isLogged() : boolean {
-     return !!this.srvToken.token;
+     return !!this.srvToken.token && !this.srvToken.jwtTokenExp();
   }
   private getUserActual() : User {
     if (!this.srvToken.token) {
@@ -57,6 +67,14 @@ export class AuthService {
     const tokenD = this.srvToken.decodeToken();
     console.log(tokenD); /////
     return {usr: tokenD.sub, rol:tokenD.rol}
+  }
+  public verificarRefrescar() : boolean {
+    if (this.isLogged() && this.srvToken.tiempoExpToken() <= 20) {
+      this.srvToken.refreshTokens();
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }
