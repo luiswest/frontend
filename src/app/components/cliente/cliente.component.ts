@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { TokenService } from 'src/app/shared/services/token.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cliente',
@@ -20,8 +21,9 @@ export class ClienteComponent implements OnInit {
   constructor(
     private srvCliente : ClienteService,
     private fb : FormBuilder,
-    private srvAuth : AuthService,
-    private srvToken : TokenService // Esto se borra
+   // private srvAuth : AuthService,
+   // private srvToken : TokenService // Esto se borra
+    private router : Router
   ) {
       this.frmCliente = this.fb.group({
         id : [''],
@@ -183,7 +185,7 @@ export class ClienteComponent implements OnInit {
 
   }
   onCerrar() {
-    alert('Cerrar catálogo')
+    this.router.navigate(['/home'])
 
   }
 
@@ -199,8 +201,8 @@ export class ClienteComponent implements OnInit {
   ngOnInit(): void {
      this.filtro = {idCliente : '', nombre : '', apellido1 : '', apellido2 : ''};
      this.filtrar();
-     console.log(this.srvAuth.valorUsrActual)
-     console.log(this.srvToken.tiempoExpToken())
+   //  console.log(this.srvAuth.valorUsrActual)
+   //  console.log(this.srvToken.tiempoExpToken())
   }
 
 }

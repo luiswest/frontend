@@ -15,6 +15,12 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.authSrv.isLogged()) {
+      if (Object.keys(route.data).length !== 0 &&
+          route.data['roles'].indexOf(this.authSrv.valorUsrActual.rol) === -1) {
+            this.router.navigate(['/error403'])
+            return false
+          }
+     // console.log(route.data);
       return true;
     }
     this.authSrv.logout();

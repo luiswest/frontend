@@ -18,7 +18,7 @@ export class NavBarComponent implements OnInit {
      this.usuario = this.authSrv.valorUsrActual.usr
      this.authSrv.usrActual
      .subscribe(
-        data => this.usuario = data.usr
+        data => this.usuario = data.nom
      )
   }
 

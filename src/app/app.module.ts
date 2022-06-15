@@ -16,6 +16,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { JwtInterceptor } from './shared/helpers/jwt.interceptor';
 import { RefreshTokenInterceptor } from './shared/helpers/refresh-token.interceptor';
+import { Error403Component } from './components/error403/error403.component';
+import { ChangePasswComponent } from './components/change-passw/change-passw.component';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import { RefreshTokenInterceptor } from './shared/helpers/refresh-token.intercep
     ArtefactoComponent,
     HomeComponent,
     LoginComponent,
+    Error403Component,
+    ChangePasswComponent,
   ],
   imports: [
     BrowserModule,

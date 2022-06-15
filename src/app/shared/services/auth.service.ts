@@ -62,11 +62,11 @@ export class AuthService {
   }
   private getUserActual() : User {
     if (!this.srvToken.token) {
-      return new User(); //{usr:'', rol:-1}
+      return new User(); //{usr:'', rol:-1, nomb:''}
     } 
     const tokenD = this.srvToken.decodeToken();
     console.log(tokenD); /////
-    return {usr: tokenD.sub, rol:tokenD.rol}
+    return {usr: tokenD.sub, rol:tokenD.rol, nom:tokenD.nom}
   }
   public verificarRefrescar() : boolean {
     if (this.isLogged() && this.srvToken.tiempoExpToken() <= 20) {
